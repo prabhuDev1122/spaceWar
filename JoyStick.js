@@ -9,10 +9,10 @@ class JoyStick {
     var returnSpeed, velVect, dis;
     var distMag;;
     this.speed = 0;
-    this.joystick = function() {
+    this.joystick = function(xMouse,yMouse) {
       push();
       translate(a, b);
-      this.mouse = createVector(mouseX - a, mouseY - b);
+      this.mouse = createVector(xMouse - a, yMouse - b);
       this.newVect = p5.Vector.sub(this.mouse, this.joyPos).normalize();
       this.angle = this.newVect.heading();
       this.borderPos = createVector(this.radius / 2 * cos(this.angle), this.radius / 2 * sin(this.angle));

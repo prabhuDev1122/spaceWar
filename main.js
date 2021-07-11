@@ -1,7 +1,9 @@
 var js, dasboard;
+var touch_0, x, y = 0;
 var jet, d, singleGunPoint, doubleGunPoint;
 var jetSize = 2;
 var singleShot = [];
+var mouse = [];
 var flameParticles = [];
 var enemy = [];
 var sparkBlast = [];
@@ -34,6 +36,14 @@ function distance(a, b) {
   var dis = Math.sqrt(dx * dx + dy * dy);
   return dis;
 }
+addEventListener('touchstart', event => {
+  x = event.touches[0].clientX;
+  y = event.touches[0].clientY;
+});
+addEventListener('touchmove', event => {
+  x = event.touches[0].clientX;
+  y = event.touches[0].clientY;
+});
 
 setInterval(() => {
   var posi = { x: random(width), y: random(100, height) };
@@ -59,7 +69,7 @@ setInterval(() => {
     fireSound_1.setVolume(1);
     fireSound_1.play();
   }
-}, 100);
+}, 80);
 
 setInterval(() => {
   for (var i = 0; i < 2; i++) {
@@ -67,12 +77,12 @@ setInterval(() => {
     var thruster = { x: jet.pos.x + ((jetSize - 5) * cos(js.angle)), y: jet.pos.y + ((jetSize - 5) * sin(js.angle)) };
     flameParticles.push(new Spark(thruster, random(5), vel));
   }
-}, 1)
+}, 100)
 
 function draw() {
-  background(0, );
-  js.joystick(); //JoyStick create
-  
+  background(0);
+  js.joystick(x, y); //JoyStick create
+
   flameParticles.forEach((flame, flameIndex) => {
     flame.show();
     flame.update();
@@ -138,5 +148,4 @@ function draw() {
   dasboard.frame();
   dasboard.speedometer(60, 60, js.speed * 90);
   dasboard.textUI(150, 50, ammo);
-  
 }
