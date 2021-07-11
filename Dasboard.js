@@ -6,10 +6,10 @@ class Dasboard {
     var value = 0;
     this.frame = function() {
       translate(this.prop.x, this.prop.y);
-      fill(200,100,50,.4);
+      fill(200, 100, 50, .4);
       stroke(200, 100, 100, .4);
       strokeWeight(2);
-      rect(0, 0, width - 1, 120);
+      rect(0, 0, width - 1, 120, 20);
     }
     this.textUI = function(x, y, data) {
       noStroke();
@@ -29,12 +29,12 @@ class Dasboard {
       var frq = 22.5;
       push();
       translate(this.pos.x, this.pos.y);
-
+      //meterReading
       fill(0, 100, 100);
       rectMode(CENTER);
       stroke(1, 100, 0, .3);
       strokeWeight(2);
-      rect(0, 30, 30, 15);
+      rect(0, 30, 30, 15, 20);
       noStroke();
       fill(0, -10, 0, .8);
       textSize(8);

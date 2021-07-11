@@ -51,11 +51,6 @@ class JoyStick {
       strokeWeight(1);
       ellipse(this.cursorPos.x, this.cursorPos.y, this.radius * .35, this.radius * .35);
       pop();
-return {
-        vector: this.newVect,
-        angle: this.newVect.normalize().heading(),
-        speed: this.speed
-      }
     }
   }
 }

@@ -71,7 +71,8 @@ setInterval(() => {
 
 function draw() {
   background(0, );
-
+  js.joystick(); //JoyStick create
+  
   flameParticles.forEach((flame, flameIndex) => {
     flame.show();
     flame.update();
@@ -132,11 +133,10 @@ function draw() {
       }
     });
   });
-
-  d = js.joystick(); //JoyStick create
-  jet.show(d.angle, ammo); //jet show/update
-  jet.update(d.vector.mult(d.speed));
+  jet.show(js.angle, ammo); //jet show/update
+  jet.update(js.newVect.mult(js.speed));
   dasboard.frame();
   dasboard.speedometer(60, 60, js.speed * 90);
   dasboard.textUI(150, 50, ammo);
+  
 }
