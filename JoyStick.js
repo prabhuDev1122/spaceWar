@@ -13,8 +13,8 @@ class JoyStick {
       push();
       translate(a, b);
       this.mouse = createVector(xMouse - a, yMouse - b);
-      this.newVect = p5.Vector.sub(this.mouse, this.joyPos).normalize();
-      this.angle = this.newVect.heading();
+      this.newVect = p5.Vector.sub(this.mouse, this.joyPos);
+      this.angle = this.newVect.normalize().heading();
       this.borderPos = createVector(this.radius / 2 * cos(this.angle), this.radius / 2 * sin(this.angle));
       fill(180, 10, 30, .51);
       noStroke();

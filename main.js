@@ -1,4 +1,4 @@
-var js, dasboard;
+var js, dasboard,velVect;
 var touch_0, x, y = 0;
 var jet, d, singleGunPoint, doubleGunPoint;
 var jetSize = 2;
@@ -55,8 +55,8 @@ setInterval(() => {
 
 //creating bullets
 setInterval(() => {
-  var vel = js.newVect.normalize();
-  var bulletVector = js.newVect.mult(js.speed + 10);
+  var vel = velVect.normalize();
+  var bulletVector = velVect.mult(js.speed + 10);
   singleGunPoint = { x: jet.pos.x + ((jetSize + 10) * cos(js.angle)), y: jet.pos.y + ((jetSize + 10) * sin(js.angle)) };
   //singleGunPoint = { x: jet.pos.x + ((jetSize + 10) * cos(d.angle -45)), y: jet.pos.y + ((jetSize + 10) * sin(d.angle - 45)) };
   if (mouseIsPressed && ammo > 1) {
@@ -73,7 +73,7 @@ setInterval(() => {
 
 setInterval(() => {
   for (var i = 0; i < 2; i++) {
-    var vel = createVector((-.05) * js.newVect.x + random(-0.1, 0.1), (-.05) * js.newVect.y + random(-.1, .1));
+    var vel = createVector((-.05) * velVect.x + random(-0.1, 0.1), (-.05) * velVect.y + random(-.1, .1));
     var thruster = { x: jet.pos.x + ((jetSize - 5) * cos(js.angle)), y: jet.pos.y + ((jetSize - 5) * sin(js.angle)) };
     flameParticles.push(new Spark(thruster, random(5), vel));
   }
@@ -82,7 +82,7 @@ setInterval(() => {
 function draw() {
   background(0);
   js.joystick(x, y); //JoyStick create
-
+  velVect = js.newVect;
   flameParticles.forEach((flame, flameIndex) => {
     flame.show();
     flame.update();
@@ -144,7 +144,7 @@ function draw() {
     });
   });
   jet.show(js.angle, ammo); //jet show/update
-  jet.update(js.newVect.mult(js.speed));
+  jet.update(velVect.mult(js.speed));
   dasboard.frame();
   dasboard.speedometer(60, 60, js.speed * 90);
   dasboard.textUI(150, 50, ammo);
