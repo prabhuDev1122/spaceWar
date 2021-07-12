@@ -69,7 +69,7 @@ setInterval(() => {
     fireSound_1.setVolume(1);
     fireSound_1.play();
   }
-}, 80);
+}, 120);
 
 setInterval(() => {
   for (var i = 0; i < 2; i++) {

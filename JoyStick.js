@@ -4,12 +4,13 @@ class JoyStick {
   constructor(a, b, r) {
     this.joyPos = createVector(0, 0);
     this.cursorPos = createVector(0, 0);
+    this.newVect = createVector(0, 0);
     this.radius = r;
-    this.mouse, this.newVect, this.borderPos = createVector(0, 0);
+    this.mouse, this.borderPos = createVector(0, 0);
     var returnSpeed, velVect, dis;
     var distMag;;
     this.speed = 0;
-    this.joystick = function(xMouse,yMouse) {
+    this.joystick = function(xMouse, yMouse) {
       push();
       translate(a, b);
       this.mouse = createVector(xMouse - a, yMouse - b);
