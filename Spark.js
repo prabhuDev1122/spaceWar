@@ -4,7 +4,7 @@ class Spark {
     this.pos = createVector(pos.x, pos.y);
     this.radius = radius;
     this.velocity = velocity;
-    this.alpha = 100;
+    this.alpha = 70;
     this.show = function() {
       noStroke();
       fill(20, 100, this.alpha);

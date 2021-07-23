@@ -10,7 +10,7 @@ class Bullet {
       push();
       translate(0, 0);
       stroke(0,100,50);
-      strokeWeight(2);
+      strokeWeight(1);
       var dx = this.pos.x + this.length * cos(this.vel.heading());
       var dy = this.pos.y + this.length * sin(this.vel.heading());
       line(this.pos.x, this.pos.y, dx, dy);

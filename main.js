@@ -1,4 +1,5 @@
-var js, dasboard,velVect;
+var js, dasboard;
+var velVect;
 var touch_0, x, y = 0;
 var jet, d, singleGunPoint, doubleGunPoint;
 var jetSize = 2;
@@ -20,6 +21,7 @@ function setup() {
   angleMode(DEGREES);
   colorMode(HSL);
   maxAmmo = ammo;
+  velVect = createVector(0, 0);
 }
 
 function preload() {
@@ -71,13 +73,15 @@ setInterval(() => {
   }
 }, 120);
 
+
+//generating jetFlame 🔥🔥🔥
 setInterval(() => {
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < 1; i++) {
     var vel = createVector((-.05) * velVect.x + random(-0.1, 0.1), (-.05) * velVect.y + random(-.1, .1));
     var thruster = { x: jet.pos.x + ((jetSize - 5) * cos(js.angle)), y: jet.pos.y + ((jetSize - 5) * sin(js.angle)) };
     flameParticles.push(new Spark(thruster, random(5), vel));
   }
-}, 100)
+}, 10)
 
 function draw() {
   background(0);
