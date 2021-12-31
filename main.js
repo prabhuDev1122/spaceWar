@@ -14,8 +14,8 @@ var maxAmmo = 0;
 
 //android api
 function setup() {
-  createCanvas(displayWidth, displayHeight - 90);
-  js = new JoyStick(320, 700, 100);
+  createCanvas(displayWidth, displayHeight);
+  js = new JoyStick(300, 580, 100);
   jet = new Jet(width / 2, height / 2, jetSize, ammo);
   dasboard = new Dasboard(0, 0);
   angleMode(DEGREES);
