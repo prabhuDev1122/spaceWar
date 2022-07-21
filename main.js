@@ -1,22 +1,25 @@
 var js, dasboard;
 var velVect;
-var touch_0, x, y = 0;
+var x, y, score = 0;
 var jet, d, singleGunPoint, doubleGunPoint;
-var jetSize = 2;
+var jetSize = .3;
 var singleShot = [];
 var mouse = [];
 var flameParticles = [];
 var enemy = [];
 var sparkBlast = [];
-var newBullet = [];
+var newAmmo = [];
 var ammo = 360;
 var maxAmmo = 0;
 
 //android api
 function setup() {
-  createCanvas(displayWidth, displayHeight);
-  js = new JoyStick(300, 580, 100);
+  //createCanvas(displayWidth, displayHeight);
+  createCanvas(displayWidth, displayHeight - 90);
+  //🕹️🕹️🕹️🕹️created
+  js = new JoyStick(200, 700, 90);
   jet = new Jet(width / 2, height / 2, jetSize, ammo);
+
   dasboard = new Dasboard(0, 0);
   angleMode(DEGREES);
   colorMode(HSL);
@@ -48,12 +51,16 @@ addEventListener('touchmove', event => {
 });
 
 setInterval(() => {
-  var posi = { x: random(width), y: random(100, height) };
-  enemy.push(new Enemy(posi, 20));
+  var posi = createVector(random(width), random(height));//{ x: random(width), y: random(100, height) };
+
+//enemy.push(new Enemy(posi,size,speed));
+  enemy.push(new Enemy(posi, 20, .51));
 }, 3000);
+
 setInterval(() => {
-  newBullet.push(new Enemy({ x: random(width), y: random(100, height) }, 20));
+  newAmmo.push(new Enemy({ x: random(width), y: random(100, height) }, 20));
 }, 31000);
+
 
 //creating bullets
 setInterval(() => {
@@ -71,7 +78,7 @@ setInterval(() => {
     fireSound_1.setVolume(1);
     fireSound_1.play();
   }
-}, 120);
+}, 100);
 
 
 //generating jetFlame 🔥🔥🔥
@@ -81,7 +88,7 @@ setInterval(() => {
     var thruster = { x: jet.pos.x + ((jetSize - 5) * cos(js.angle)), y: jet.pos.y + ((jetSize - 5) * sin(js.angle)) };
     flameParticles.push(new Spark(thruster, random(5), vel));
   }
-}, 10)
+}, 100)
 
 function draw() {
   background(0);
@@ -94,10 +101,9 @@ function draw() {
       flameParticles.splice(flameIndex, 1);
     }
   });
-  //show newBullets
-  newBullet.forEach((newbullet) => {
-    newbullet.show(120);
-    newbullet.update();
+  //show newAmmos
+  newAmmo.forEach((newAmmo) => {
+    newAmmo.show(100);
   });
 
   sparkBlast.forEach((spark, sparkIndex) => {
@@ -106,11 +112,6 @@ function draw() {
     if (spark.dead()) {
       sparkBlast.splice(sparkIndex, 1);
     }
-  });
-  //bullets show/update/destroy
-  enemy.forEach((enemies) => {
-    enemies.show(30);
-    enemies.update(createVector(random(-.2, .2), random(-.2, .2)));
   });
 
   singleShot.forEach((bullet, bulletIndex) => {
@@ -121,9 +122,9 @@ function draw() {
     }
   });
 
-  newBullet.forEach((newbullets, bulletInd) => {
-    if (distance(newbullets, jet) <= (newbullets.radius + jet.radius) / 2) {
-      newBullet.splice(bulletInd, 1);
+  newAmmo.forEach((newAmmos, bulletInd) => {
+    if (distance(newAmmos, jet) <= (newAmmos.radius + jet.radius) / 2) {
+      newAmmo.splice(bulletInd, 1);
       ammo += 100;
       if (ammo > maxAmmo) {
         ammo = 360;
@@ -133,6 +134,13 @@ function draw() {
     }
   });
 
+  //bullets show/update/destroy
+  enemy.forEach((enemies) => {
+    enemies.show(300);
+    enemies.update(jet.pos);
+  });
+
+  //destroy enemies
   enemy.forEach((enemies, enemyInd) => {
     singleShot.forEach((bullet, bulletInd) => {
       if (distance(bullet, enemies) <= (bullet.radius + enemies.radius) / 2) {
@@ -141,6 +149,7 @@ function draw() {
           sparkBlast.push(new Spark(bullet.pos, random(3), vel.mult(random(2.5))));
         }
         enemy.splice(enemyInd, 1);
+        score += 1;
         singleShot.splice(bulletInd, 1);
         blast.setVolume(1);
         blast.play();
@@ -151,5 +160,8 @@ function draw() {
   jet.update(velVect.mult(js.speed));
   dasboard.frame();
   dasboard.speedometer(60, 60, js.speed * 90);
-  dasboard.textUI(150, 50, ammo);
+  dasboard.textUI("Health:  ", 150, 40, 100+'%');
+  dasboard.textUI("Bullets: ", 150, 50, ammo);
+  dasboard.textUI("Score:   ", 150, 60, score);
+  dasboard.textUI("BulletArray:   ", 150, 70, singleShot.length);
 }

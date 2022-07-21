@@ -11,11 +11,11 @@ class Dasboard {
       strokeWeight(2);
       rect(0, 0, width - 1, 120, 20);
     }
-    this.textUI = function(x, y, data) {
+    this.textUI = function(name, x, y, data) {
       noStroke();
       fill(0, 100, 100);
       textSize(10);
-      text("Bullets: " + data, x, y);
+      text(name + data, x, y);
     }
     this.speedometer = function(a, b, val) {
       this.pos = createVector(a, b);
