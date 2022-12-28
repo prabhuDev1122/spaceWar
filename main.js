@@ -11,6 +11,7 @@ var sparkBlast = [];
 var newAmmo = [];
 var ammo = 360;
 var maxAmmo = 0;
+var health = 100;
 
 //android api
 function setup() {
@@ -24,7 +25,8 @@ function setup() {
   angleMode(DEGREES);
   colorMode(HSL);
   maxAmmo = ammo;
-  velVect = createVector(0, 0);
+  velVect = p5.Vector(0, 0);
+  //velVect = createVector(0, 0);
 }
 
 function preload() {
@@ -41,26 +43,26 @@ function distance(a, b) {
   var dis = Math.sqrt(dx * dx + dy * dy);
   return dis;
 }
+
 addEventListener('touchstart', event => {
   x = event.touches[0].clientX;
   y = event.touches[0].clientY;
 });
+
 addEventListener('touchmove', event => {
   x = event.touches[0].clientX;
   y = event.touches[0].clientY;
 });
 
 setInterval(() => {
-  var posi = createVector(random(width), random(height));//{ x: random(width), y: random(100, height) };
-
-//enemy.push(new Enemy(posi,size,speed));
+  var posi = createVector(random(width), random(height)); //{ x: random(width), y: random(100, height) };
+  //enemy.push(new Enemy(posi,size,speed));
   enemy.push(new Enemy(posi, 20, .51));
 }, 3000);
 
 setInterval(() => {
   newAmmo.push(new Enemy({ x: random(width), y: random(100, height) }, 20));
 }, 31000);
-
 
 //creating bullets
 setInterval(() => {
@@ -76,7 +78,7 @@ setInterval(() => {
     }
     singleShot.push(new Bullet(singleGunPoint, bulletVector));
     fireSound_1.setVolume(1);
-    fireSound_1.play();
+    //fireSound_1.play();
   }
 }, 100);
 
@@ -130,7 +132,7 @@ function draw() {
         ammo = 360;
       }
       bulletGain.setVolume(1);
-      bulletGain.play();
+      //bulletGain.play();
     }
   });
 
@@ -140,7 +142,7 @@ function draw() {
     enemies.update(jet.pos);
   });
 
-  //destroy enemies
+  //destroy enemies with bullet
   enemy.forEach((enemies, enemyInd) => {
     singleShot.forEach((bullet, bulletInd) => {
       if (distance(bullet, enemies) <= (bullet.radius + enemies.radius) / 2) {
@@ -151,17 +153,27 @@ function draw() {
         enemy.splice(enemyInd, 1);
         score += 1;
         singleShot.splice(bulletInd, 1);
-        blast.setVolume(1);
-        blast.play();
+        //blast.setVolume(1);
+        //blast.play();
       }
+
     });
   });
+
+  //destroy enimies collision with jet
+  enemy.forEach((enemies, enemyInd) => {
+    if (distance(jet, enemies) <= (jet.radius + enemies.radius) / 2) {
+      enemy.splice(enemyInd, 1);
+      
+    }
+  });
+
   jet.show(js.angle, ammo); //jet show/update
   jet.update(velVect.mult(js.speed));
-  dasboard.frame();
-  dasboard.speedometer(60, 60, js.speed * 90);
-  dasboard.textUI("Health:  ", 150, 40, 100+'%');
-  dasboard.textUI("Bullets: ", 150, 50, ammo);
-  dasboard.textUI("Score:   ", 150, 60, score);
-  dasboard.textUI("BulletArray:   ", 150, 70, singleShot.length);
+  //dasboard.frame();
+  //dasboard.speedometer(60, 60, js.speed * 90);
+  dasboard.textUI("Health:   ", 150, 40, health + '%');
+  dasboard.textUI("Bullets:  ", 150, 50, ammo);
+  dasboard.textUI("Score:    ", 150, 60, score);
+  dasboard.textUI("Enemies:  ", 150, 70, enemy.length);
 }
