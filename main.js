@@ -164,13 +164,16 @@ function draw() {
   enemy.forEach((enemies, enemyInd) => {
     if (distance(jet, enemies) <= (jet.radius + enemies.radius) / 2) {
       enemy.splice(enemyInd, 1);
-      
+      health += -10;
+      if (health <= 0) {
+        health = 0;
+      }
     }
   });
 
   jet.show(js.angle, ammo); //jet show/update
   jet.update(velVect.mult(js.speed));
-  //dasboard.frame();
+  dasboard.frame();
   //dasboard.speedometer(60, 60, js.speed * 90);
   dasboard.textUI("Health:   ", 150, 40, health + '%');
   dasboard.textUI("Bullets:  ", 150, 50, ammo);

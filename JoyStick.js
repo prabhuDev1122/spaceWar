@@ -27,8 +27,9 @@ class JoyStick {
         stroke(100, 0, 100 - i * (1 / 2));
         ellipse(this.joyPos.x, this.joyPos.y, i, i);
       }*/
-      //fill(180, 10, 30, 0.5);
+
       noFill();
+      fill(180, 10, 30, 0.5);
       stroke(180, 100, 50);
       strokeWeight(1);
       ellipse(this.joyPos.x, this.joyPos.y, this.radius * .85, this.radius * .85);
@@ -38,7 +39,7 @@ class JoyStick {
       velVect = this.cursorPos.copy();
       dis = p5.Vector.sub(velVect, this.joyPos).mag();
       this.speed = map(dis, 0, 50, 0, 3);
-
+      
       if (mouseIsPressed) {
         if (distMag <= this.radius / 2) {
           this.cursorPos = this.mouse;
